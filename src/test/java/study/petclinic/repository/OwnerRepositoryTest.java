@@ -58,4 +58,23 @@ class OwnerRepositoryTest {
         assertThat(ownersEmpty).isEmpty();
     }
 
+    @Test
+    public void findByNameTest() {
+        Address address = new Address("city", "street", "myzip");
+        Owner owner = new Owner("Fu", "Bao", address, "1112111");
+        ownerRepository.save(owner);
+
+        List<Owner> ownerByFirstName = ownerRepository.findByName(owner.getFirstName());
+        List<Owner> ownerByLastName = ownerRepository.findByName(owner.getLastName());
+        List<Owner> ownersEmpty = ownerRepository.findByName("NONAME");
+
+        assertThat(ownerByFirstName).isNotEmpty();
+        assertThat(ownerByFirstName.get(0)).isEqualTo(owner);
+
+        assertThat(ownerByLastName).isNotEmpty();
+        assertThat(ownerByLastName.get(0)).isEqualTo(owner);
+
+        assertThat(ownersEmpty).isEmpty();
+    }
+
 }
