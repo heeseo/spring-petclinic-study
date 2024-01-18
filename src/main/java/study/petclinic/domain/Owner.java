@@ -35,4 +35,7 @@ public class Owner {
         this.phoneNumber = phoneNumber;
     }
 
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
 }
