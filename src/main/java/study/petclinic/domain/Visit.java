@@ -29,4 +29,9 @@ public class Visit {
         this.description = description;
         pet.addVisit(this);
     }
+
+    public void updateVisit(LocalDateTime date, String description) {
+        this.date = date;
+        this.description = description;
+    }
 }
