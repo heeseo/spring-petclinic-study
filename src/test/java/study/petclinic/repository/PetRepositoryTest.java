@@ -30,7 +30,7 @@ class PetRepositoryTest {
         Owner owner = new Owner("Fu", "Bao", address, "1112111");
         ownerRepository.save(owner);
 
-        Pet pet = new Pet("loopy", owner, LocalDateTime.now(), PetType.DOG);
+        Pet pet = Pet.registerPet("loopy", owner, LocalDateTime.now(), PetType.DOG);
         petRepository.save(pet);
 
         Optional<Pet> petOptional = petRepository.findById(pet.getId());
@@ -51,7 +51,7 @@ class PetRepositoryTest {
         Owner owner = new Owner("Fu", "Bao", address, "1112111");
         ownerRepository.save(owner);
 
-        Pet pet = new Pet("loopy", owner, LocalDateTime.now(), PetType.DOG);
+        Pet pet = Pet.registerPet("loopy", owner, LocalDateTime.now(), PetType.DOG);
         petRepository.save(pet);
 
         //when

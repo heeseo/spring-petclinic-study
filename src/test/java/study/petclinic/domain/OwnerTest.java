@@ -33,10 +33,9 @@ class OwnerTest {
         // Arrange
         Address address = new Address("City", "Street", "12345");
         Owner owner = new Owner("Bob", "Johnson", address, "123-456-7890");
-        Pet pet = new Pet("Fluffy", owner, LocalDateTime.now(), PetType.BIRD);
 
         // Act
-        owner.getPets().add(pet);
+        Pet pet = Pet.registerPet("Fluffy", owner, LocalDateTime.now(), PetType.BIRD);
 
         // Assert
         assertThat(owner).isNotNull();

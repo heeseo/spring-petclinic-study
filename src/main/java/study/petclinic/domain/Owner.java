@@ -35,4 +35,11 @@ public class Owner {
         this.phoneNumber = phoneNumber;
     }
 
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
+
+    public void addPet(Pet pet) {
+        this.pets.add(pet);
+    }
 }

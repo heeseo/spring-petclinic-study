@@ -32,10 +32,27 @@ public class Pet {
     @OneToMany(mappedBy = "pet")
     private List<Visit> visits = new ArrayList<>();
 
-    public Pet(String name, Owner owner, LocalDateTime birthDate, PetType type) {
+    private Pet(String name, Owner owner, LocalDateTime birthDate, PetType type) {
         this.name = name;
         this.owner = owner;
         this.birthDate = birthDate;
         this.type = type;
+        owner.addPet(this);
+    }
+
+    //===factory method=======//
+    public static Pet registerPet(String name, Owner owner, LocalDateTime birthDate, PetType type) {
+        return new Pet(name, owner, birthDate, type);
+
+    }
+
+    public void updatePet(String name, LocalDateTime birthDate, PetType type) {
+        this.name = name;
+        this.birthDate = birthDate;
+        this.type = type;
+    }
+
+    public void addVisit(Visit visit) {
+        this.visits.add(visit);
     }
 }
