@@ -46,7 +46,7 @@ public class OwnerController {
     public String findOwners(@RequestParam(required = false) String ownerName, Model model) {
         log.info("name = {}", ownerName);
 
-        List<Owner> owners = ownerService.findOwners();
+        List<Owner> owners = ownerService.searchOwners(ownerName);
 
         model.addAttribute("ownerName", ownerName);
         model.addAttribute("owners", owners);
