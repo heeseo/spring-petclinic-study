@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import study.petclinic.domain.Address;
 import study.petclinic.domain.Owner;
 import study.petclinic.service.OwnerService;
@@ -51,5 +48,30 @@ public class OwnerController {
         model.addAttribute("ownerName", ownerName);
         model.addAttribute("owners", owners);
         return "owners/ownerList";
+    }
+
+    @GetMapping("/owners/{id}")
+    public String ownerDetail(@PathVariable("id") Long id, Model model) {
+        Owner owner = ownerService.findOne(id);
+        model.addAttribute("owner", owner);
+        return "owners/ownerDetail";
+    }
+
+    @GetMapping("/owners/{id}/edit")
+    public String editOwnerForm(@PathVariable("id") Long id, Model model) {
+        Owner owner = ownerService.findOne(id);
+        OwnerEditForm ownerEditForm = OwnerEditForm.convertToForm(owner);
+        model.addAttribute("ownerEditForm", ownerEditForm);
+        return "owners/editOwnerForm";
+    }
+
+    @PostMapping("/owners/{id}/edit")
+    public String updateOwner(@ModelAttribute("owner") OwnerEditForm ownerEditForm, BindingResult result){
+        if (result.hasErrors()) {
+            return "owners/editOwnerForm";
+        }
+        log.info("ownerId = {}", ownerEditForm.getId());
+        ownerService.update(ownerEditForm.getId(), new Address(ownerEditForm.getCity(), ownerEditForm.getStreet(), ownerEditForm.getZipcode()));
+        return "redirect:/owners/" + ownerEditForm.getId();
     }
 }
