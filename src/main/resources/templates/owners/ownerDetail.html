@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
+<div>
+    <h3>Owner Information</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <td th:text="${owner.firstName +' '+ owner.lastName}">owner name</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td th:text="${owner.address.city +', '+ owner.address.street}">owner city, owner street</td>
+        </tr>
+        <tr>
+            <th>Phone number</th>
+            <td th:text="${owner.phoneNumber}">Phone number</td>
+        </tr>
+
+        </thead>
+    </table>
+    <a th:href="@{'/owners/' + ${owner.id} + '/edit'}">Edit Owner</a>
+    <a th:href="@{'/owners/' + ${owner.id} + '/pet/add'}">Add Pet</a>
+    <h3>Pet Information</h3>
+    <table class="table table-bordered table-striped">
+        <tr th:if="${owner.pets.empty}">
+            <td colspan="4">Not found</td>
+        </tr>
+        <tr th:each="pet : ${owner.pets}">
+            <th scope="col">
+                <dl class="dl-horizontal">
+                    <dt>Name</dt>
+                    <dd th:text="${pet.name}">name</dd>
+                    <dt>Birth Date</dt>
+                    <dd th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}">2024-02-06</dd>
+                    <dt>Type</dt>
+                    <dd th:text="${pet.type}">hamster</dd>
+                </dl>
+            </th>
+            <td>
+                <table class="table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Visit Date</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tr th:if="${pet.visits.empty}">
+                        <td colspan="4">No Appointment</td>
+                    </tr>
+                    <tr th:each="visit : ${pet.visits}">
+                        <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}">2024-01-25</td>
+                        <td th:text="${visit.description}">222</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a th:href="@{'/owners/' + ${owner.id} + '/pet/' + ${pet.id} + '/edit'}">Edit Pet</a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/owners/' + ${owner.id} + '/pet/' + ${pet.id} + '/visit/add'}">Add Visit</a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

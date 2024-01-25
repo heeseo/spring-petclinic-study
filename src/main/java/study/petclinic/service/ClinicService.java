@@ -20,7 +20,7 @@ public class ClinicService {
     private final PetService petService;
     private final VisitRepository visitRepository;
 
-
+    @Transactional
     public Long addVisit(Long petId, LocalDateTime date, String description) {
         Pet pet = petService.findPet(petId);
         Visit visit = new Visit(pet, date, description);
@@ -28,6 +28,7 @@ public class ClinicService {
         return visit.getId();
     }
 
+    @Transactional
     public void editVisit(Long id, LocalDateTime date, String description) {
         Visit visit = visitRepository.findById(id).orElseThrow(() -> new VisitNotFoundException("Visit not found with id: " + id));
         visit.updateVisit(date, description);

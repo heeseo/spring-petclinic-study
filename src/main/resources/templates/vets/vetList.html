@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
+
+<div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Speciality</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${vets.empty}">
+            <td colspan="4">Not found</td>
+        </tr>
+        <tr th:each="vet : ${vets}">
+            <td th:text="${vet.firstName +' '+ vet.lastName}">
+                    owner name
+            </td>
+            <td th:if="${vet.specialities.empty}">
+                None
+            </td>
+            <td th:utext="${#strings.listJoin(vet.specialities.![name], ', ')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

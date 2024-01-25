@@ -33,7 +33,7 @@ public class OwnerService {
     }
 
     public List<Owner> searchOwners(String name) {
-        return ownerRepository.findByName(name);
+        return ownerRepository.findByNameIgnoreCase(name);
     }
 
     @Transactional

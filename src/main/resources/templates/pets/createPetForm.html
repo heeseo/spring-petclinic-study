@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+ .fieldError {
+ border-color: #bd2130;
+ }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <form role="form" method="post" th:object="${petForm}">
+
+        <div class="form-group">
+            <label for="name">Pet Name</label>
+            <input id="name" type="text" class="form-control" th:field="*{name}"
+                   placeholder="Enter pet name"
+                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('name')}"
+               th:errors="*{name}">Incorrect date</p>
+        </div>
+
+        <label for="birthDate">Birth date:</label>
+        <input type="date" id="birthDate" th:field="*{birthDate}"/>
+
+
+        <div class="form-group">
+            <label for="type">Pet type</label>
+            <select th:field="*{type}" id="type" class="form-control">
+                <option value="">Choose type</option>
+                <option th:each="type : ${types}"
+                        th:value="${type}"
+                        th:text="${type}" />
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

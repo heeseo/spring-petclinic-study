@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{fragments/bodyHeader :: bodyHeader}"/>
+<div>
+    <form role="form" th:action method="get">
+        <div>
+            <input type="text" name="ownerName" th:value="${ownerName}" class="form-control" placeholder="Owner name"/>
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div>
+    <a href="/owners/add">Add Owner</a>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone number</th>
+            <th>Pet</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${owners.empty}">
+            <td colspan="4">Not found</td>
+        </tr>
+        <tr th:each="owner : ${owners}">
+            <td>
+                <a th:href="@{'/owners/' + ${owner.id}}" th:text="${owner.firstName +' '+ owner.lastName}">
+                    owner name
+                </a>
+            </td>
+            <td th:text="${owner.address.city +', '+ owner.address.street}">owner address</td>
+            <td th:text="${owner.phoneNumber}">0001234567</td>
+            <!--            <td th:text="${owner.pets}">pet names</td>-->
+            <td th:utext="${#strings.listJoin(owner.pets.![name], ', ')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
