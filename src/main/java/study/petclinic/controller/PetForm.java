@@ -10,7 +10,10 @@ import java.time.LocalDateTime;
 
 @Getter @Setter
 public class PetForm {
+
     private String name;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private PetType type;
 }
