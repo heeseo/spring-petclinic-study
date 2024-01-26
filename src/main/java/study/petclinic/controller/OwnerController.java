@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.petclinic.domain.Address;
 import study.petclinic.domain.Owner;
@@ -27,7 +28,7 @@ public class OwnerController {
 
 
     @PostMapping("/owners/add")
-    public String addOwner(@ModelAttribute("ownerForm") OwnerForm ownerForm, BindingResult result) {
+    public String addOwner(@Validated @ModelAttribute("ownerForm") OwnerForm ownerForm, BindingResult result) {
         if (result.hasErrors()) {
             return "owners/createOwnerForm";
         }
