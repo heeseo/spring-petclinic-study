@@ -62,12 +62,12 @@ public class OwnerController {
     public String editOwnerForm(@PathVariable("id") Long id, Model model) {
         Owner owner = ownerService.findOne(id);
         OwnerEditForm ownerEditForm = OwnerEditForm.convertToForm(owner);
-        model.addAttribute("ownerEditForm", ownerEditForm);
+        model.addAttribute("owner", ownerEditForm);
         return "owners/editOwnerForm";
     }
 
     @PostMapping("/owners/{id}/edit")
-    public String updateOwner(@ModelAttribute("owner") OwnerEditForm ownerEditForm, BindingResult result){
+    public String updateOwner(@Validated @ModelAttribute("owner") OwnerEditForm ownerEditForm, BindingResult result){
         if (result.hasErrors()) {
             return "owners/editOwnerForm";
         }
