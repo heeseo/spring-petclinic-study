@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.petclinic.domain.Pet;
 import study.petclinic.domain.PetType;
@@ -28,10 +29,12 @@ public class PetController {
     }
 
     @PostMapping("/owners/{ownerId}/pet/add")
-    public String createPet(@PathVariable("ownerId") Long ownerId, @ModelAttribute("petForm") PetForm petForm) {
-        log.info("pet type = {}", petForm.getType());
-        log.info("birth date = {}", petForm.getBirthDate());
-        log.info("pet name = {}", petForm.getName());
+    public String createPet(@PathVariable("ownerId") Long ownerId, @Validated @ModelAttribute("petForm") PetForm petForm, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("types", PetType.values());
+            return "pets/createPetForm";
+        }
+
         petService.register(ownerId, petForm.getName(), petForm.getBirthDate().atStartOfDay(), petForm.getType());
         return "redirect:/owners/" + ownerId;
     }
