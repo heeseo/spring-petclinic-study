@@ -3,6 +3,8 @@ package study.petclinic.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,13 @@ public class VisitController {
     }
 
     @PostMapping("/owners/{ownerId}/pet/{petId}/visit/add")
-    public String addVisit(@PathVariable("ownerId") Long ownerId, @PathVariable("petId") Long petId, @ModelAttribute("visitForm") VisitForm visitForm) {
+    public String addVisit(@PathVariable("ownerId") Long ownerId,
+                           @PathVariable("petId") Long petId,
+                           @Validated @ModelAttribute("visitForm") VisitForm visitForm,
+                           BindingResult result) {
+        if (result.hasErrors()) {
+            return "visits/addVisitForm";
+        }
         clinicService.addVisit(petId, visitForm.getDate(), visitForm.getDescription());
         return "redirect:/owners/" + ownerId;
     }

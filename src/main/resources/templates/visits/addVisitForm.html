@@ -14,6 +14,8 @@
 
         <label for="date">Date:</label>
         <input type="datetime-local" id="date" th:field="*{date}"/>
+        <p th:if="${#fields.hasErrors('date')}"
+           th:errors="*{date}">Incorrect date</p>
 
         <div class="form-group">
             <label for="description">Description</label>
@@ -21,7 +23,7 @@
                    placeholder="Enter description"
                    th:class="${#fields.hasErrors('description')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('description')}"
-               th:errors="*{name}">Incorrect description</p>
+               th:errors="*{description}">Incorrect description</p>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
